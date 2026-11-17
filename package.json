@@ -1,0 +1,20 @@
+{
+  "name": "reactorium",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chemistry merge game: real thermodynamics, phases, electrochemistry and fusion.",
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "android:init": "npx cap add android",
+    "android:sync": "npm run build && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "6.2.0",
+    "@capacitor/app": "6.0.2",
+    "@capacitor/core": "6.2.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "6.2.0"
+  }
+}

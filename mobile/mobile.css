@@ -1,0 +1,94 @@
+/* ───────── Reactorium · 휴대폰(앱) 레이아웃 ─────────
+   PC용 index.html 위에 덧씌우는 스타일. scripts/build.py가 www/index.html에 넣는다. */
+:root{--m-nav:60px;--m-head:46px;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px)}
+html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none}
+body{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;font-size:14px}
+.sheet,.sheet *{-webkit-user-select:text;user-select:text}
+button,input{touch-action:manipulation}
+
+/* 앱 셸: 헤더 / 화면 / 하단 탭 */
+.app{max-width:none;height:100%;display:flex;flex-direction:column;padding:calc(var(--sat) + 6px) max(12px,env(safe-area-inset-left,0px)) 0 max(12px,env(safe-area-inset-right,0px))}
+.top{flex:none;height:var(--m-head);margin:0;flex-wrap:nowrap;gap:8px}
+.mark{width:30px;height:30px}
+.brand{gap:8px}
+.brand h1{font-size:21px}
+.tools{gap:5px}
+.tools>.ibtn{width:36px;height:36px;border-radius:11px}
+.tools>.ibtn svg{width:19px;height:19px}
+@media (max-width:370px){.brand h1{display:none}}
+
+/* 하단 모드 탭 */
+.mnav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(4,1fr);height:calc(var(--m-nav) + var(--sab));padding:0 6px var(--sab);background:var(--panel);border-top:1px solid var(--line);box-shadow:0 -8px 24px -18px rgba(0,0,0,.5)}
+.mnav .ibtn{width:auto;height:auto;border:0;box-shadow:none;background:none;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--muted);margin:5px 3px}
+.mnav .ibtn svg{width:22px;height:22px}
+.mnav .ibtn .ml{font-size:11px;font-weight:700;letter-spacing:.01em;line-height:1.1}
+.mnav .ibtn[aria-pressed="true"]{color:var(--accent);background:var(--accent-soft)}
+
+/* 화면 영역: 내부만 스크롤 */
+.layout,.xview{flex:1;min-height:0;margin:0;padding-bottom:calc(var(--m-nav) + var(--sab) + 10px)}
+.xview{display:flex!important;flex-direction:column;gap:12px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-top:2px}
+.xview[hidden]{display:none!important}
+.xview .xside{position:static}
+.xview>*{flex:none}
+
+/* 게임 화면: 상태줄 + 보드 + 패널 탭 + 패널 */
+#view-game.layout{display:flex!important;flex-direction:column;gap:8px;grid-template-columns:none}
+#view-game[hidden]{display:none!important}
+.colA,.colC{display:none!important}
+.colB{flex:none;position:static}
+.mstrip{flex:none;display:flex;gap:8px;align-items:center;height:38px}
+.mstrip .res{flex:1;display:flex;flex-direction:row;gap:8px;align-items:center;margin:0;padding:0;border:0;min-width:0}
+.mstrip .meter{flex:1;min-width:0;gap:3px}
+.mstrip .mlab{font-size:12px}.mstrip .mlab span{display:none}
+.mstrip .resn{display:flex;gap:6px}
+.mstrip .resn span{gap:5px;padding:4px 8px}
+.mstrip .resn small{font-size:11px}.mstrip .resn b{font-size:14px}
+.mbtns{display:flex;gap:6px;flex:none}
+.mbtns .ibtn{width:38px;height:38px;padding:0;border-radius:11px;background:linear-gradient(135deg,var(--frame1),var(--frame2));border:0;color:#fff}
+.mbtns .ibtn span{display:none}
+.mbtns .ibtn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.mbtns .ibtn:disabled{opacity:.45}
+.boardwrap{padding:7px;border-radius:18px}
+.tray{padding:4px;border-radius:12px}
+/* 높이 기준으로 보드 크기를 정하고, 아래 패널이 최소 공간을 갖게 한다 */
+.board{min-width:0;max-width:100%}
+.boardbar{margin-top:6px;gap:6px}
+.boardbar .btn{padding:6px 10px;font-size:12.5px}
+.boardbar .tip{font-size:12px}
+
+.mtabs{flex:none;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:3px}
+.mtabs button{border:0;background:none;border-radius:10px;padding:7px 2px;font-size:12.5px;font-weight:700;color:var(--muted);position:relative}
+.mtabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+.mtabs button.dot::after{content:"";position:absolute;top:5px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 2px var(--panel)}
+.mpane{flex:1;min-height:120px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;border-radius:16px}
+.mpane>.card{display:none;margin:0;min-height:100%}
+.mpane>.card.on{display:block}
+.mpane .status{grid-template-columns:minmax(0,1fr)!important}
+.mpane .shopcard{min-height:100%}
+.mpane .shopgrid{grid-template-columns:repeat(auto-fill,minmax(60px,1fr))}
+.mpane .logcard .logscroll{max-height:none;overflow:visible}
+.mpane .ctl{display:none}
+.mpane .ctl.on{display:flex;flex-direction:column;gap:12px}
+.mpane .card{padding:12px}
+
+/* 시트·토스트 */
+.scrim{padding:0;align-items:flex-end!important}
+.sheet{max-height:calc(100dvh - var(--sat) - 24px);border-radius:22px 22px 0 0!important;padding-bottom:calc(16px + var(--sab))}
+.achv{bottom:calc(var(--m-nav) + var(--sab) + 12px);width:calc(100vw - 24px)}
+
+/* 전기화학·핵융합 */
+.xview .card{padding:12px}
+.xview .ec-row,.xview .ec-row.three{grid-template-columns:minmax(0,1fr)}
+.xview .ec-ctl{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.fu-graph canvas{max-height:260px}
+
+/* 가로 모드(태블릿 포함): 보드 옆에 패널 */
+@media (orientation:landscape) and (min-width:700px){
+  #view-game.layout{display:grid!important;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);column-gap:12px;grid-template-areas:"s s" "b t" "b p"}
+  .mstrip{grid-area:s}.colB{grid-area:b}.mtabs{grid-area:t}.mpane{grid-area:p}
+}
+
+/* 패널 안에서는 탭 이름과 겹치는 제목 숨김 */
+.mpane .shopcard .logtop .eyebrow,.mpane .logcard>.eyebrow{display:none}
+.mpane .shopcard .logtop{justify-content:flex-end;margin-bottom:4px}
+@media (max-width:480px){.xview .ec-ctl{grid-template-columns:minmax(0,1fr)}}
